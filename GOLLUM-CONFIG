@@ -1,0 +1,6 @@
+==== Rubygems ====
+gollum (5.3.0)
+github-markdown (0.6.9)
+
+==== Commandline ====
+gollum --lenient-tag-lookup --css --host <HOST> --port <PORT> --no-edit <WIKI_GIT>
