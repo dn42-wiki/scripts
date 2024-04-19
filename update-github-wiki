@@ -20,8 +20,8 @@ if [ "$OLD_COMMIT" != "$NEW_COMMIT" ] || [ "$1" = "force" ]; then
     #until curl -s http://$DN42_WIKI_WEB_HOST:$DN42_WIKI_WEB_PORT >/dev/null; do true; done
     httrack http://$DN42_WIKI_WEB_HOST:$DN42_WIKI_WEB_PORT --update -%F '' -O $DN42_WIKI_RENDERED -*/gollum/history/* -*/gollum/commit/* -*/gollum/latest_changes?* -*/*.md/* >/dev/null
     #kill $GOLLUM_PID
-    rsync -aq --delete --exclude '*-2.html' ${DN42_WIKI_WEB_HOST}_${DN42_WIKI_WEB_PORT}/. $DN42_WIKI_GIT/robots.txt $DN42_WIKI_RENDERED/_redirects dist
-    find dist/ -type f -print0 | xargs -0 sed -i "s#http://$DN42_WIKI_WEB_HOST:$DN42_WIKI_WEB_PORT/#$DN42_WIKI_HISTORY_URI/#g ; s#<a href=\"../../../../../\">robots.txt</a>#<a href=\"/robots.txt\">robots.txt</a>#g ; s#href=\"\([^\"]\+\)-2.html\"#href=\"\1.html\"#g ; s#anon%40git.dn42_dn42/ca-client.html#anon%40git.dn42:dn42/ca-client# ; s#<a href="whois.html">whois.dn42</a>#<a href="whois.dn42">whois.dn42</a>#g"
+    rsync -aq --delete --exclude '*-[2-9].html' ${DN42_WIKI_WEB_HOST}_${DN42_WIKI_WEB_PORT}/. $DN42_WIKI_GIT/robots.txt $DN42_WIKI_RENDERED/_redirects dist
+    find dist/ -type f -print0 | xargs -0 sed -i "s#http://$DN42_WIKI_WEB_HOST:$DN42_WIKI_WEB_PORT/#$DN42_WIKI_HISTORY_URI/#g ; s#<a href=\"../../../../../\">robots.txt</a>#<a href=\"/robots.txt\">robots.txt</a>#g ; s#href=\"\([^\"]\+\)-[2-9].html\"#href=\"\1.html\"#g ; s#anon%40git.dn42_dn42/ca-client.html#anon%40git.dn42:dn42/ca-client# ; s#<a href="whois.html">whois.dn42</a>#<a href="whois.dn42">whois.dn42</a>#g"
     git add .
     git commit -m "update-$(date '+%Y%m%d%H%M%S')"
     git push
